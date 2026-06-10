@@ -9,15 +9,15 @@ An AI-powered web application that generates SEO-friendly e-commerce product des
 ### Frontend
 
 * React
-* Tailwind CSS
+  
 
 ### Backend
 
-* FastAPI
+* Node/Express JS
 
 ### Database
 
-* PostgreSQL (Supabase)
+* Mongo DB
 
 ### AI Integration
 
