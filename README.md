@@ -13,11 +13,11 @@ An AI-powered web application that generates SEO-friendly e-commerce product des
 
 ### Backend
 
-* FastAPI
+* Express.js
 
 ### Database
 
-* PostgreSQL (Supabase)
+* Mongo DB
 
 ### AI Integration
 
