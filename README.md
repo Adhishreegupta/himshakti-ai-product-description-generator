@@ -9,7 +9,7 @@ An AI-powered web application that generates SEO-friendly e-commerce product des
 ### Frontend
 
 * React
-* Tailwind CSS
+  
 
 ### Backend
 
