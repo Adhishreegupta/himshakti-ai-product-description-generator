@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import Showcase from "./pages/Showcase";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Dashboard from "./pages/Dashboard";
@@ -9,6 +9,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/showcase" element={<Showcase />}/>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/dashboard" element={<Dashboard />} />
