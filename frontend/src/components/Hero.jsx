@@ -1,6 +1,8 @@
 import hero from "../assets/hero-bg1.jpg";
-
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 function Hero() {
+  const navigate = useNavigate();
   return (
     <section
       className="relative min-h-screen bg-cover bg-center"
@@ -20,35 +22,41 @@ function Hero() {
             AI FOR E-COMMERCE CONTENT
           </p>
 
-          <h1 className="
-            text-3xl sm:text-5xl lg:text-7xl
-            font-bold text-white leading-tight mt-4
-          ">
-            Generate Product Descriptions That Sell
-          </h1>
+          <motion.h1
+  initial={{ opacity: 0, y: 40 }}
+  animate={{ opacity: 5, y: 3 }}
+  transition={{ duration: 0.8 }}
+  className="text-3xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight mt-4"
+  style={{ fontFamily: "Poppins" }}
+>
+  From Product to Purchase.
+</motion.h1>
 
-          <p className="
-            text-gray-200 mt-6 sm:mt-8
-            text-base sm:text-lg lg:text-xl
-            leading-7 sm:leading-8
-          ">
-            Generate compelling, SEO-optimized product descriptions for food brands and e-commerce marketplaces using AI.
-          </p>
+          <motion.p
+  initial={{ opacity: 0, y: 40 }}
+  animate={{ opacity: 4, y: 0 }}
+  transition={{ duration: 1, delay: 0.3 }}
+  className="text-gray-200 mt-6  sm:mt-8
+  text-lg
+  sm:text-xl
+  lg:text-2xl
+  leading-8
+  sm:leading-9
+  max-w-3xl"
+  style={{ fontFamily: "Poppins" }}
+>
+  Give every product a voice that informs, engages, and inspires customers to buy.
+</motion.p>
 
           {/* buttons */}
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 mt-8 sm:mt-10">
 
-            <button
-              className="
-                bg-green-600 hover:bg-green-700
-                px-6 sm:px-8 py-3 sm:py-4
-                rounded-full text-white font-semibold
-                transition duration-300
-              "
-            >
-              Start Creating
-            </button>
+            <button onClick={() => navigate("/create")} className="bg-green-600 hover:bg-green-700
+             px-6 py-4 rounded-full text-white font-semibold transition duration-300">
 
+             Create
+
+            </button>
             <button
               className="
                 border border-white text-white

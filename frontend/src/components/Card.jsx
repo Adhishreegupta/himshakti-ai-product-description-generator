@@ -1,53 +1,92 @@
-function Card({title}){
+import { FaRobot, FaSearch, FaPalette } from "react-icons/fa";
 
-return(
+function Card({ title }) {
 
-<div
-className="bg-white rounded-3xl p-10
-shadow-sm hover:shadow-xl
-duration-500
-hover:-translate-y-2"
->
+  let icon;
+  let description;
+  let titleColor;
+  switch (title) {
 
-<div
-className="
-w-16
-h-16
-rounded-2xl
-bg-green-100
-mb-6
-"
-/>
+    case "AI Description":
+      icon = <FaRobot size={36} className="text-white" />;
+      titleColor = "text-emerald-600";
+      description =
+        "Generate compelling, human-like product descriptions instantly using advanced AI.";
+      break;
 
-<h2
-className="
-text-3xl
-font-semibold
-mb-5
-"
->
+    case "SEO Optimized":
+      icon = <FaSearch size={36} className="text-white" />;
+      titleColor = "text-emerald-600";
+      description =
+        "Improve visibility with keyword-rich content designed for search engines.";
+      break;
 
-{title}
+    case "Tone Selection":
+      icon = <FaPalette size={36} className="text-white" />;
+      titleColor = "text-emerald-600";
+      description =
+        "Choose from Luxury, Traditional, Friendly or Modern writing styles.";
+      break;
 
-</h2>
+    default:
+      icon = "✨";
+      description = "";
+  }
 
-<p
-className="
-text-gray-600
-leading-8
-"
->
+  return (
 
-Generate compelling product content,
-SEO optimization,
-and AI-enhanced e-commerce listings.
+    <div
+      className="
+      bg-white
+      rounded-3xl
+      shadow-xl
+      p-10
+      text-center
+      hover:-translate-y-2
+      hover:shadow-green-300/40
+      transition-all
+      duration-300
+      "
+    >
 
-</p>
+      <div
+        className="
+        w-20
+        h-20
+        rounded-full
+        bg-gradient-to-br
+       from-green-500
+       to-emerald-700
+       text-white
+       shadow-lg
+       flex
+       items-center
+       justify-center
+       mx-auto
+       mb-6
+       "
+      >
 
-</div>
+        {icon}
 
-)
+      </div>
+
+      <h2 className={`text-2xl font-bold ${titleColor}`}>
+
+        {title}
+
+      </h2>
+
+      <p className="text-gray-600 mt-5 leading-7">
+
+        {description}
+
+      </p>
+
+    </div>
+
+  );
 
 }
 
-export default Card
+export default Card;

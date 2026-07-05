@@ -53,7 +53,7 @@ Why Choose CopyCart AI?
 
 </h1>
 
-<p className="mt-6 text-gray-600 text-base sm:text-lg max-w-2xl">
+<p className="mt-6 text-emarald-600 text-base sm:text-lg max-w-2xl">
 
 Create high-converting product listings in seconds.
 
@@ -83,71 +83,131 @@ mt-20
 </section>
 
 
-{/* Backend Connected Section */}
+{/* Live Products */}
 
-<section className="pb-28 px-6">
+<section className="py-24 px-6 bg-green-50">
 
-<div className="max-w-7xl mx-auto">
+<div className="max-w-6xl mx-auto">
 
-<h2 className="text-3xl font-bold text-center mb-12">
+<div className="text-center mb-14">
 
-Live Product Data
+<h2 className="text-5xl font-bold text-green-800">
+
+🌿 Live Products
 
 </h2>
 
-<div className="grid md:grid-cols-2 gap-8">
+<p className="mt-4 text-gray-600 text-lg">
 
-{
-
-products.map((p)=>(
-
-<div
-
-key={p.id}
-
-className="bg-white rounded-3xl shadow-xl p-8"
-
->
-
-<h3 className="text-2xl font-bold">
-
-{p.name}
-
-</h3>
-
-<p className="mt-3">
-
-Ingredients:
-{p.ingredients}
-
-</p>
-
-<p>
-
-Weight:
-{p.weight}
-
-</p>
-
-<p>
-
-Features:
-{p.features}
-
-</p>
-
-<p>
-
-Tone:
-{p.tone}
+Recently added products from our marketplace.
 
 </p>
 
 </div>
 
-))
+<div className="space-y-8">
 
-}
+{products
+.slice(0, 4)
+.map((p) => (
+
+<div
+
+key={p.id}
+
+className="
+bg-white
+rounded-3xl
+shadow-xl
+hover:shadow-green-400/30
+transition
+duration-300
+flex
+items-center
+overflow-hidden
+"
+
+>
+
+<img
+
+src={`http://127.0.0.1:8000${p.image}`}
+
+alt={p.name}
+
+className="
+w-40
+h-40
+object-cover
+flex-shrink-0
+"
+
+/>
+
+<div className="flex-1 p-8">
+
+<div className="flex justify-between items-start">
+
+<div>
+
+<h3 className="text-2xl font-bold text-gray-800">
+
+{p.name}
+
+</h3>
+
+<p className="text-gray-500 mt-1">
+
+{p.weight}
+
+</p>
+
+</div>
+
+<span
+className="
+bg-green-600
+text-white
+px-4
+py-2
+rounded-full
+text-sm
+font-semibold
+"
+>
+
+{p.tone}
+
+</span>
+
+</div>
+
+<p className="mt-5 text-gray-600 leading-7">
+
+{p.features.length > 120
+? p.features.substring(0,120) + "..."
+: p.features}
+
+</p>
+
+<button
+className="
+mt-6
+text-green-700
+font-semibold
+hover:underline
+"
+>
+
+Read More →
+
+</button>
+
+</div>
+
+</div>
+
+))}
 
 </div>
 
