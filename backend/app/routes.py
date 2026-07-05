@@ -1,7 +1,9 @@
 from fastapi import APIRouter, HTTPException
 from app.models import Product
 from app.database import products_collection
-
+from fastapi import UploadFile, File, Form
+import shutil
+import os
 router = APIRouter()
 
 
@@ -79,36 +81,47 @@ def get_product(product_id: int):
 # CREATE PRODUCT
 # ==========================
 @router.post("/products", status_code=201)
-def create_product(product: Product):
+async def create_product(
+    id: int = Form(...),
+    name: str = Form(...),
+    ingredients: str = Form(...),
+    weight: str = Form(...),
+    features: str = Form(...),
+    tone: str = Form(...),
+    image: UploadFile = File(...)
+):
 
     existing = products_collection.find_one(
-
-        {
-            "id": product.id
-        }
-
+        {"id": id}
     )
 
     if existing:
-
         raise HTTPException(
-
             status_code=400,
-
             detail="Product ID already exists"
-
         )
 
-    products_collection.insert_one(
+    filename = image.filename
 
-        product.model_dump()
+    filepath = os.path.join("uploads", filename)
 
-    )
+    with open(filepath, "wb") as buffer:
+        shutil.copyfileobj(image.file, buffer)
+
+    product = {
+        "id": id,
+        "name": name,
+        "ingredients": ingredients,
+        "weight": weight,
+        "features": features,
+        "tone": tone,
+        "image": f"/uploads/{filename}"
+    }
+
+    products_collection.insert_one(product)
 
     return {
-
-        "message": "Product created"
-
+        "message": "Product Created Successfully"
     }
 
 
