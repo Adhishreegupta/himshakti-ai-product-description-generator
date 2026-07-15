@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar"
 import Hero from "../components/Hero"
 import Card from "../components/Card"
 import Footer from "../components/Footer"
-
+import { Link } from "react-router-dom";
 function Home(){
 
 const [products,setProducts]=useState([])
@@ -151,15 +151,15 @@ flex-shrink-0
 <div>
 
 <h3 className="text-2xl font-bold text-gray-800">
-
-{p.name}
-
+  {p.name}
 </h3>
 
 <p className="text-gray-500 mt-1">
+  {p.weight}
+</p>
 
-{p.weight}
-
+<p className="mt-2 text-2xl font-bold text-green-700">
+  ₹{p.price}
 </p>
 
 </div>
@@ -184,24 +184,35 @@ font-semibold
 
 <p className="mt-5 text-gray-600 leading-7">
 
-{p.features.length > 120
-? p.features.substring(0,120) + "..."
-: p.features}
+{p.description?.length > 120
+ ? p.description.substring(0,120) + "..."
+ : p.description}
 
 </p>
 
-<button
+<Link
+
+to={`/product/${p.id}`}
+
 className="
+
 mt-6
+
+inline-block
+
 text-green-700
+
 font-semibold
+
 hover:underline
+
 "
+
 >
 
 Read More →
 
-</button>
+</Link>
 
 </div>
 

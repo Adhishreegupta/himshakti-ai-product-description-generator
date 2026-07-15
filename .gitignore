@@ -1,5 +1,22 @@
+# Node
 node_modules/
-.env
-.DS_Store
 dist/
 .next/
+
+# Environment files
+.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Operating System
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Python uploads (optional)
+uploads/

@@ -1,79 +1,82 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import hero from "../assets/hero-bg1.jpg";
-import { signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "../firebase";
 
-function Login() {
+function Register() {
 
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const handleLogin = async () => {
+  const handleChange = (e) => {
 
-    if (!email.trim()) {
-    setMessage("Email is required.");
-    return;
-}
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    });
 
-if (!email.includes("@")) {
-    setMessage("Enter a valid email.");
-    return;
-}
+  };
 
-if (password.length < 6) {
-    setMessage("Password should contain at least 6 characters.");
-    return;
-}
+  const handleRegister = async () => {
+
+    if (
+      !user.name ||
+      !user.email ||
+      !user.password
+    ) {
+      setMessage("Please fill all fields.");
+      return;
+    }
 
     setLoading(true);
     setMessage("");
 
     try {
+      if(name.trim().length < 3){
+    setMessage("Name should be at least 3 characters.");
+    return;
+}
 
-      const formData = new URLSearchParams();
+if(!email.includes("@")){
+    setMessage("Enter a valid email.");
+    return;
+}
 
-formData.append("username", email);
-formData.append("password", password);
-
-const response = await axios.post(
-  "http://127.0.0.1:8000/auth/login",
-  formData,
-  {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-  }
-);
-
-      localStorage.setItem(
-        "token",
-        response.data.access_token
+if(password.length < 6){
+    setMessage("Password should contain at least 6 characters.");
+    return;
+}
+      const response = await axios.post(
+        "http://127.0.0.1:8000/auth/register",
+        user
       );
 
-      setMessage("✅ Login Successful!");
+      setMessage(response.data.message);
 
       setTimeout(() => {
-        navigate("/dashboard");
-      }, 1000);
+        navigate("/login");
+      }, 1500);
 
-    } catch (error) {
+    }
 
-      console.log(error);
+    catch (error) {
 
       if (error.response) {
         setMessage(error.response.data.detail);
-      } else {
-        setMessage("Unable to connect to backend.");
+      }
+      else {
+        setMessage("Backend connection failed.");
       }
 
     }
@@ -81,52 +84,10 @@ const response = await axios.post(
     setLoading(false);
 
   };
-  const handleGoogleLogin = async () => {
-
-  try {
-
-    const result = await signInWithPopup(
-      auth,
-      googleProvider
-    );
-
-    const user = result.user;
-
-    localStorage.setItem("token", "google-user");
-
-    localStorage.setItem(
-      "userName",
-      user.displayName
-    );
-
-    localStorage.setItem(
-      "userEmail",
-      user.email
-    );
-
-    localStorage.setItem(
-      "userPhoto",
-      user.photoURL
-    );
-
-    navigate("/dashboard");
-
-  }
-
-  catch (error) {
-
-    console.log(error);
-
-    alert("Google Login Failed");
-
-  }
-
-};
 
   return (
 
     <>
-
       <Navbar />
 
       <main>
@@ -167,18 +128,23 @@ const response = await axios.post(
             >
 
               <h1 className="text-4xl font-bold">
-                Welcome Back
+
+                Create Account
+
               </h1>
 
               <p className="mt-4 text-gray-200">
-                Continue creating high-converting listings.
+
+                Register to start creating AI product descriptions.
+
               </p>
 
               <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                value={user.name}
+                onChange={handleChange}
                 className="
                 w-full
                 mt-8
@@ -192,10 +158,29 @@ const response = await axios.post(
               />
 
               <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={user.email}
+                onChange={handleChange}
+                className="
+                w-full
+                mt-4
+                p-5
+                rounded-2xl
+                bg-white/10
+                border
+                border-white/20
+                outline-none
+                "
+              />
+
+              <input
                 type="password"
+                name="password"
                 placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={user.password}
+                onChange={handleChange}
                 className="
                 w-full
                 mt-4
@@ -209,7 +194,7 @@ const response = await axios.post(
               />
 
               <button
-                onClick={handleLogin}
+                onClick={handleRegister}
                 disabled={loading}
                 className="
                 w-full
@@ -223,54 +208,33 @@ const response = await axios.post(
                 disabled:bg-gray-500
                 "
               >
-                {loading ? "Logging in..." : "Login"}
+
+                {loading ? "Registering..." : "Register"}
+
               </button>
-              <div className="flex items-center my-6">
 
-  <div className="flex-1 h-px bg-white/20"></div>
-
-  <span className="px-4 text-gray-300">
-    OR
-  </span>
-
-  <div className="flex-1 h-px bg-white/20"></div>
-
-</div>
-
-<button
-  onClick={handleGoogleLogin}
-  className="
-  w-full
-  bg-white
-  text-gray-800
-  hover:bg-gray-100
-  rounded-2xl
-  p-5
-  font-semibold
-  flex
-  justify-center
-  items-center
-  gap-3
-  transition
-  "
->
-
-  <img
-    src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-    alt="Google"
-    className="w-6 h-6"
-  />
-
-  Continue with Google
-
-</button>
               {message && (
 
                 <p className="text-center mt-6 text-green-300 font-semibold">
+
                   {message}
+
                 </p>
 
               )}
+
+              <p className="text-center mt-8 text-gray-300">
+
+                Already have an account?
+
+                <Link
+                  to="/login"
+                  className="text-green-400 ml-2 hover:underline"
+                >
+                  Login
+                </Link>
+
+              </p>
 
             </div>
 
@@ -288,4 +252,4 @@ const response = await axios.post(
 
 }
 
-export default Login;
+export default Register;

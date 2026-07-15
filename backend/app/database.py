@@ -18,3 +18,4 @@ except Exception as e:
 db = client["copycart_ai"]
 
 products_collection = db["products"]
+users_collection = db["users"]

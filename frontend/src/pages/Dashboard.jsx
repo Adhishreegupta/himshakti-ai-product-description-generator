@@ -4,7 +4,7 @@ import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import hero from "../assets/hero-bg1.jpg";
-
+import { Link } from "react-router-dom";
 function Dashboard() {
   
   const [products, setProducts] = useState([]);
@@ -18,6 +18,7 @@ const [editProduct, setEditProduct] = useState({
   name: "",
   ingredients: "",
   weight: "",
+  price: "",
   features: "",
   tone: "",
   image: "",
@@ -37,10 +38,16 @@ const [editProduct, setEditProduct] = useState({
 const deleteProduct = async () => {
 
   try {
-
+    const token = localStorage.getItem("token");
     await axios.delete(
-      `http://127.0.0.1:8000/products/${selectedProduct.id}`
-    );
+      `http://127.0.0.1:8000/products/${selectedProduct.id}`,
+       {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+);
+
 
     fetchProducts();
 
@@ -78,12 +85,18 @@ const handleEditChange = (e) => {
 const saveChanges = async () => {
 
   try {
+    const token = localStorage.getItem("token");
 
     await axios.put(
 
       `http://127.0.0.1:8000/products/${editProduct.id}`,
 
-      editProduct
+      editProduct,
+      {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
 
     );
 
@@ -264,7 +277,9 @@ const saveChanges = async () => {
                           {product.name}
 
                         </h2>
-
+                        <p className="text-3xl font-bold text-green-700 mt-2">
+  ₹{product.price}
+</p>
                         <div className="mt-4 space-y-3 text-gray-700">
 
                           <p>
@@ -291,22 +306,26 @@ const saveChanges = async () => {
 
                             {product.ingredients}
 
-                          </p>
-
+                          </p>                            
                           <p>
 
-                            <span className="font-semibold">
+<span className="font-semibold">
 
-                              Features:
+Description:
 
-                            </span>
+</span>
 
-                            <br />
+<br/>
 
-                            {product.features}
+{product.description
+  ? (
+      product.description.length > 120
+        ? product.description.substring(0, 120) + "..."
+        : product.description
+    )
+  : "No description available."}
 
-                          </p>
-
+</p>
                         </div>
 
                         <span
@@ -326,33 +345,77 @@ const saveChanges = async () => {
 
                         </span>
 
-                        <div className="flex gap-4 mt-6">
+                        <div className="mt-6">
 
-                          <button onClick={() => openEditModal(product)}
+<Link
 
-                           className=" flex-1 bg-blue-600 hover:bg-blue-700
-                           text-white py-3rounded-xlfont-semibold transition "
+to={`/product/${product.id}`}
 
-                            >
+className="
+inline-block
+mb-5
+text-green-700
+font-bold
+hover:underline
+"
 
-                          Update
+>
 
-                          </button>
+Read More →
 
-                          <button onClick={() => {
-                            setSelectedProduct(product);
+</Link>
 
-                            setShowDeleteModal(true); }}
+<div className="flex gap-4">
 
-                            className=" flex-1 bg-red-600 hover:bg-red-700 text-white
-                            py-3 rounded-xl font-semibold transition "
-                            >
- 
-                            Delete
+<button
 
-                          </button>
+onClick={() => openEditModal(product)}
 
-                        </div>
+className="
+flex-1
+bg-blue-600
+hover:bg-blue-700
+text-white
+py-3
+rounded-xl
+font-semibold
+"
+
+>
+
+Update
+
+</button>
+
+<button
+
+onClick={() => {
+
+setSelectedProduct(product);
+
+setShowDeleteModal(true);
+
+}}
+
+className="
+flex-1
+bg-red-600
+hover:bg-red-700
+text-white
+py-3
+rounded-xl
+font-semibold
+"
+
+>
+
+Delete
+
+</button>
+
+</div>
+
+</div>
 
                       </div>
 
@@ -513,7 +576,14 @@ value={editProduct.weight}
 onChange={handleEditChange}
 className="w-full p-4 rounded-xl bg-zinc-800 text-white"
 />
-
+<input
+type="number"
+name="price"
+value={editProduct.price}
+onChange={handleEditChange}
+placeholder="Price"
+className="w-full p-4 rounded-xl bg-zinc-800 text-white"
+/>
 <textarea
 name="features"
 value={editProduct.features}
