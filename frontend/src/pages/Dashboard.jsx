@@ -5,14 +5,15 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import hero from "../assets/hero-bg1.jpg";
 import { Link } from "react-router-dom";
+import Loader from "../components/Loader";
+import { toast } from "react-toastify";
 function Dashboard() {
   
   const [products, setProducts] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-
+  const [loading, setLoading] = useState(true);
 const [editProduct, setEditProduct] = useState({
   id: "",
   name: "",
@@ -27,13 +28,30 @@ const [editProduct, setEditProduct] = useState({
     fetchProducts();
   }, []);
 
-  const fetchProducts = async () => {
+  const fetchProducts = async () => { setLoading(true);
+
     try {
-      const response = await axios.get("http://127.0.0.1:8000/products");
-      setProducts(response.data);
+      const token = localStorage.getItem("token");
+
+const response = await axios.get(
+    "http://127.0.0.1:8000/products",
+    {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    }
+);
+setProducts(response.data);
+    
     } catch (error) {
       console.log(error);
-    }
+       toast.error("Failed to load products.");
+      
+    }finally {
+
+    setLoading(false);
+
+  }
   };
 const deleteProduct = async () => {
 
@@ -49,7 +67,8 @@ const deleteProduct = async () => {
 );
 
 
-    fetchProducts();
+    await fetchProducts();
+    toast.success("Product Deleted Successfully!");
 
     setShowDeleteModal(false);
 
@@ -58,6 +77,7 @@ const deleteProduct = async () => {
   } catch (error) {
 
     console.log(error);
+    toast.error("Failed to delete product.");
 
   }
 
@@ -102,15 +122,11 @@ const saveChanges = async () => {
 
     setShowEditModal(false);
 
-    fetchProducts();
+    await fetchProducts();
 
-    setShowSuccessPopup(true);
+    toast.success("Product Updated Successfully!");
 
-    setTimeout(() => {
-
-    setShowSuccessPopup(false);
-
-   }, 2500);
+    
 
   }
 
@@ -118,7 +134,7 @@ const saveChanges = async () => {
 
     console.log(error);
 
-    alert("Update Failed");
+    toast.error("Update Failed");
 
   }
 
@@ -226,7 +242,7 @@ const saveChanges = async () => {
 
               </h2>
 
-              {products.length === 0 ? (
+              {loading ? (<Loader />) :  products.length === 0 ? (
 
                 <div className="bg-white rounded-3xl p-10 text-center shadow-xl">
 
@@ -663,64 +679,7 @@ Save Changes
 </div>
 
 )}
-{showSuccessPopup && (
 
-<div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50">
-
-<div
-className="
-bg-zinc-900
-border
-border-green-500
-rounded-3xl
-shadow-2xl
-p-10
-w-[430px]
-text-center
-animate-pulse
-"
->
-
-<div className="text-6xl">
-
-✅
-
-</div>
-
-<h2 className="text-3xl font-bold text-white mt-4">
-
-Product Updated
-
-</h2>
-
-<p className="text-gray-400 mt-4">
-
-Your product has been updated successfully.
-
-</p>
-
-<div
-className="
-mt-8
-inline-block
-bg-green-600
-px-6
-py-3
-rounded-full
-text-white
-font-semibold
-"
->
-
-Success
-
-</div>
-
-</div>
-
-</div>
-
-)}
       <Footer />
 
     </>

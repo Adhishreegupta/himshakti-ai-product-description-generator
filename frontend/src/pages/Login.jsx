@@ -7,7 +7,7 @@ import Footer from "../components/Footer";
 import hero from "../assets/hero-bg1.jpg";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../firebase";
-
+import { toast } from "react-toastify";
 function Login() {
 
   const navigate = useNavigate();
@@ -60,7 +60,7 @@ const response = await axios.post(
         response.data.access_token
       );
 
-      setMessage("✅ Login Successful!");
+      toast.success("Login Successful!");
 
       setTimeout(() => {
         navigate("/dashboard");
@@ -71,9 +71,9 @@ const response = await axios.post(
       console.log(error);
 
       if (error.response) {
-        setMessage(error.response.data.detail);
+        toast.error(error.response.data.detail);
       } else {
-        setMessage("Unable to connect to backend.");
+        toast.errore("Unable to connect to backend.");
       }
 
     }

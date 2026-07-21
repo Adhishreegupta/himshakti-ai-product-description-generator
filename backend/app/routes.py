@@ -13,10 +13,22 @@ router = APIRouter()
 # GET ALL PRODUCTS (Public)
 # ==========================
 @router.get("/products")
-def get_products():
+def get_products(user=Depends(verify_token)):
 
     products = list(
-        products_collection.find({}, {"_id": 0})
+
+        products_collection.find(
+
+            {
+                "owner": user["email"]
+            },
+
+            {
+                "_id": 0
+            }
+
+        )
+
     )
 
     return products
@@ -26,11 +38,13 @@ def get_products():
 # SEARCH PRODUCTS (Public)
 # ==========================
 @router.get("/products/search")
-def search(name: str):
+def search(name: str, user=Depends(verify_token)):
 
     products = list(
         products_collection.find(
             {
+             "owner": user["email"],
+
                 "name": {
                     "$regex": name,
                     "$options": "i"
@@ -123,7 +137,8 @@ async def create_product(
         "tone": tone,
         "price": price,
         "description": description,
-        "image": f"/uploads/{filename}"
+        "image": f"/uploads/{filename}",
+        "owner": user["email"]
 
     }
 

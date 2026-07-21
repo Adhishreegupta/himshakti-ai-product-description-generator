@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-
+import { toast } from "react-toastify";
 function CreateProduct() {
   const [product, setProduct] = useState({
     id: "",
@@ -19,9 +19,6 @@ function CreateProduct() {
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [preview, setPreview] = useState(null);
-
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
   const handleChange = (e) => {
     setProduct({
       ...product,
@@ -46,11 +43,11 @@ function CreateProduct() {
       !product.features ||
       !product.tone
     ) {
-      alert("Please fill all product details first.");
+      toast.warning("Please fill all product details first.");
       return;
     }
 
-   setError("");
+   
    setLoadingAI(true);
 
     try {
@@ -66,17 +63,25 @@ function CreateProduct() {
   );
 
   setDescription(response.data.description);
+   toast.success("AI Description Generated!");
 
 } catch (error) {
 
-  setError("Failed to generate AI description. Please try again.");
+  toast.error("Failed to generate AI description. Please try again.");
 
 } finally {
 
   setLoadingAI(false);
 
 }
-  }
+  };
+  const copyDescription = () => {
+
+    navigator.clipboard.writeText(description);
+
+    toast.success("Description Copied!");
+
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -107,7 +112,7 @@ await axios.post(
   }
 );
 
-      setMessage("✅ Product Added Successfully!");
+      toast.success("Product Added Successfully!");
 
       setProduct({
         id: "",
@@ -124,9 +129,9 @@ await axios.post(
       setPreview(null);
     } catch (error) {
       if (error.response) {
-        setMessage(error.response.data.detail);
+        toast.error(error.response.data.detail);
       } else {
-        setMessage("Backend Connection Error");
+        toast.error("Backend Connection Error");
       }
     }
   };
@@ -152,6 +157,7 @@ await axios.post(
               onChange={handleChange}
               className="w-full p-4 rounded-lg bg-zinc-800 border border-zinc-700 text-white"
               required
+              disabled={loadingAI}
             />
 
             <input
@@ -162,6 +168,7 @@ await axios.post(
               onChange={handleChange}
               className="w-full p-4 rounded-lg bg-zinc-800 border border-zinc-700 text-white"
               required
+              disabled={loadingAI}
             />
 
             <textarea
@@ -172,6 +179,7 @@ await axios.post(
               onChange={handleChange}
               className="w-full p-4 rounded-lg bg-zinc-800 border border-zinc-700 text-white"
               required
+              disabled={loadingAI}
             />
 
             <input
@@ -182,6 +190,7 @@ await axios.post(
               onChange={handleChange}
               className="w-full p-4 rounded-lg bg-zinc-800 border border-zinc-700 text-white"
               required
+              disabled={loadingAI}
             />
             <input
   type="number"
@@ -191,6 +200,7 @@ await axios.post(
   onChange={handleChange}
   className="w-full p-4 rounded-lg bg-zinc-800 border border-zinc-700 text-white"
   required
+  disabled={loadingAI}
 />
             <textarea
               name="features"
@@ -200,6 +210,7 @@ await axios.post(
               onChange={handleChange}
               className="w-full p-4 rounded-lg bg-zinc-800 border border-zinc-700 text-white"
               required
+              disabled={loadingAI}
             />
 
             <select
@@ -208,6 +219,7 @@ await axios.post(
               onChange={handleChange}
               className="w-full p-4 rounded-lg bg-zinc-800 border border-zinc-700 text-white"
               required
+              disabled={loadingAI}
             >
               <option value="">Choose Tone</option>
               <option value="Premium">Premium</option>
@@ -222,22 +234,75 @@ await axios.post(
               disabled={loadingAI}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-bold"
             >
-              {loadingAI
-                ? "Generating...⏳"
-                : "✨ Generate AI Description"}
+              {loadingAI ? (
+  <div className="flex justify-center items-center gap-3">
+    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+    <span>Generating AI Description...</span>
+  </div>
+) : (
+  "✨ Generate AI Description"
+          )}
             </button>
-            {error && (  <p className="text-red-500 font-semibold mb-3">
-            {error}
-            </p>
-             )}
-            <textarea
-              rows="8"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Generated description will appear here..."
-              className="w-full p-4 rounded-lg bg-zinc-800 border border-zinc-700 text-white"
-            />
+            
+            {description && (
+  <div className="bg-zinc-800 rounded-xl p-6 border border-green-600">
+    <h2 className="text-green-400 font-bold mb-4">
+      AI Generated Description
+    </h2>
 
+    <textarea
+      rows="8"
+      value={description}
+      onChange={(e) => setDescription(e.target.value)}
+      className="
+      w-full
+      bg-transparent
+      text-white
+      outline-none
+      resize-none
+      "
+    />
+  </div>
+    )}
+            {description && (
+  <button
+    type="button"
+    onClick={generateDescription}
+    disabled={loadingAI}
+    className="
+    w-full
+    mt-4
+    bg-purple-600
+    hover:bg-purple-700
+    text-white
+    py-3
+    rounded-xl
+    font-semibold
+    "
+  >
+    🔄 Regenerate Description
+  </button>
+  
+
+)}
+{description && (
+  <button
+    type="button"
+    onClick={copyDescription}
+    className="
+    w-full
+    mt-3
+    bg-green-600
+    hover:bg-green-700
+    text-white
+    py-3
+    rounded-xl
+    font-semibold
+    "
+  >
+    📋 Copy Description
+  </button>
+)}
             <div>
               <label className="text-white font-semibold">
                 Upload Product Image
@@ -249,6 +314,7 @@ await axios.post(
                 onChange={handleImageChange}
                 className="mt-2 block w-full text-white"
                 required
+                disabled={loadingAI}
               />
             </div>
 
@@ -274,12 +340,6 @@ await axios.post(
             </button>
 
           </form>
-
-          {message && (
-            <p className="text-center mt-6 text-green-400 font-bold">
-              {message}
-            </p>
-          )}
 
         </div>
       </div>
