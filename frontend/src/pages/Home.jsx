@@ -23,7 +23,7 @@ if(!token){
 
 axios
 .get(
-"http://127.0.0.1:8000/products",
+"https://himshakti-backend-j6uf.onrender.com/products",
 {
 headers:{
 Authorization:`Bearer ${token}`
@@ -403,7 +403,7 @@ overflow-hidden
 
 <img
 
-src={`http://127.0.0.1:8000${p.image}`}
+src={`https://himshakti-backend-j6uf.onrender.com${p.image}`}
 
 alt={p.name}
 

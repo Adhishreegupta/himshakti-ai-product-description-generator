@@ -34,7 +34,7 @@ const [editProduct, setEditProduct] = useState({
       const token = localStorage.getItem("token");
 
 const response = await axios.get(
-    "http://127.0.0.1:8000/products",
+    "https://himshakti-backend-j6uf.onrender.com/products",
     {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -58,7 +58,7 @@ const deleteProduct = async () => {
   try {
     const token = localStorage.getItem("token");
     await axios.delete(
-      `http://127.0.0.1:8000/products/${selectedProduct.id}`,
+      `https://himshakti-backend-j6uf.onrender.com/products/${selectedProduct.id}`,
        {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -109,7 +109,7 @@ const saveChanges = async () => {
 
     await axios.put(
 
-      `http://127.0.0.1:8000/products/${editProduct.id}`,
+      `https://himshakti-backend-j6uf.onrender.com/products/${editProduct.id}`,
 
       editProduct,
       {
@@ -281,7 +281,7 @@ const saveChanges = async () => {
                     >
 
                       <img
-                        src={`http://127.0.0.1:8000${product.image}`}
+                        src={`https://himshakti-backend-j6uf.onrender.com${product.image}`}
                         alt={product.name}
                         className="w-full h-64 object-cover"
                       />

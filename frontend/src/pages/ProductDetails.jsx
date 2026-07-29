@@ -14,7 +14,7 @@ function ProductDetails() {
   useEffect(() => {
 
     axios
-      .get(`http://127.0.0.1:8000/products/${id}`)
+      .get(`https://himshakti-backend-j6uf.onrender.com/products/${id}`)
       .then((res) => {
         setProduct(res.data);
       })
@@ -92,7 +92,7 @@ function ProductDetails() {
             <div>
 
               <img
-                src={`http://127.0.0.1:8000${product.image}`}
+                src={`https://himshakti-backend-j6uf.onrender.com${product.image}`}
                 alt={product.name}
                 className="
                 w-full

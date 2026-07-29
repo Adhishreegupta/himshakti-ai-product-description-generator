@@ -52,7 +52,7 @@ function CreateProduct() {
 
     try {
   const response = await axios.post(
-    "http://127.0.0.1:8000/generate-description",
+    "https://himshakti-backend-j6uf.onrender.com/generate-description",
     {
       name: product.name,
       ingredients: product.ingredients,
@@ -102,7 +102,7 @@ function CreateProduct() {
       const token = localStorage.getItem("token");
 
 await axios.post(
-  "http://127.0.0.1:8000/products",
+  "https://himshakti-backend-j6uf.onrender.com/products",
   formData,
   {
     headers: {

@@ -24,7 +24,7 @@
           }
         },
         "url": {
-          "raw": "http://127.0.0.1:8000/products",
+          "raw": "https://himshakti-backend-j6uf.onrender.com/products",
           "protocol": "http",
           "host": [
             "127",
@@ -55,7 +55,7 @@
           }
         },
         "url": {
-          "raw": "POST http://127.0.0.1:8000/products",
+          "raw": "POST https://himshakti-backend-j6uf.onrender.com/products",
           "protocol": "POST http",
           "host": [
             "127",
@@ -89,7 +89,7 @@
           }
         },
         "url": {
-          "raw": "http://127.0.0.1:8000/products/1",
+          "raw": "https://himshakti-backend-j6uf.onrender.com/products/1",
           "protocol": "http",
           "host": [
             "127",
@@ -121,7 +121,7 @@
           }
         },
         "url": {
-          "raw": "http://127.0.0.1:8000/products/1",
+          "raw": "https://himshakti-backend-j6uf.onrender.com/products/1",
           "protocol": "http",
           "host": [
             "127",
@@ -144,7 +144,7 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "http://127.0.0.1:8000/products/1",
+          "raw": "https://himshakti-backend-j6uf.onrender.com/products/1",
           "protocol": "http",
           "host": [
             "127",
@@ -167,7 +167,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://127.0.0.1:8000/products/search?name=honey",
+          "raw": "https://himshakti-backend-j6uf.onrender.com/products/search?name=honey",
           "protocol": "http",
           "host": [
             "127",
@@ -205,7 +205,7 @@
           }
         },
         "url": {
-          "raw": "http://127.0.0.1:8000/products",
+          "raw": "https://himshakti-backend-j6uf.onrender.com/products",
           "protocol": "http",
           "host": [
             "127",
@@ -239,7 +239,7 @@
           }
         },
         "url": {
-          "raw": "http://127.0.0.1:8000/products",
+          "raw": "https://himshakti-backend-j6uf.onrender.com/products",
           "protocol": "http",
           "host": [
             "127",
@@ -273,7 +273,7 @@
           }
         },
         "url": {
-          "raw": "http://127.0.0.1:8000/products",
+          "raw": "https://himshakti-backend-j6uf.onrender.com/products",
           "protocol": "http",
           "host": [
             "127",
@@ -304,7 +304,7 @@
           }
         },
         "url": {
-          "raw": "http://127.0.0.1:8000/products",
+          "raw": "https://himshakti-backend-j6uf.onrender.com/products",
           "protocol": "http",
           "host": [
             "127",
@@ -335,7 +335,7 @@
           }
         },
         "url": {
-          "raw": "http://127.0.0.1:8000/products/1",
+          "raw": "https://himshakti-backend-j6uf.onrender.com/products/1",
           "protocol": "http",
           "host": [
             "127",
@@ -375,7 +375,7 @@
           ]
         },
         "url": {
-          "raw": "http://127.0.0.1:8000/auth/login",
+          "raw": "https://himshakti-backend-j6uf.onrender.com/auth/login",
           "protocol": "http",
           "host": [
             "127",
@@ -415,7 +415,7 @@
           ]
         },
         "url": {
-          "raw": "http://127.0.0.1:8000/auth/login",
+          "raw": "https://himshakti-backend-j6uf.onrender.com/auth/login",
           "protocol": "http",
           "host": [
             "127",
