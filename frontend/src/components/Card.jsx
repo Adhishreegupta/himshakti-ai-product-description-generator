@@ -37,7 +37,7 @@ function Card({ title }) {
 
     <div
       className="
-      bg-white
+      bg-white dark:bg-[#171717]
       rounded-3xl
       shadow-xl
       p-10
@@ -77,7 +77,7 @@ function Card({ title }) {
 
       </h2>
 
-      <p className="text-gray-600 mt-5 leading-7">
+      <p className="text-gray-600 dark:text-gray-300 mt-5 leading-7">
 
         {description}
 

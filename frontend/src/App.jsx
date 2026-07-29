@@ -12,7 +12,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/showcase" element={<Showcase />}/>
+        <Route path="/showcase" element={<Showcase />} />
         <Route path="/" element={<Home />} />
         <Route path="/create-product" element={<ProtectedRoute><CreateProduct /></ProtectedRoute>}/>
         <Route path="/about" element={<About />} />

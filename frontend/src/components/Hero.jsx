@@ -6,9 +6,11 @@ function Hero() {
   return (
     <section
       className="relative min-h-screen bg-cover bg-center"
+      
       style={{
         backgroundImage: `url(${hero})`,
       }}
+      
     >
       {/* overlay */}
       <div className="absolute inset-0 bg-black/55" />
@@ -51,13 +53,13 @@ function Hero() {
           {/* buttons */}
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 mt-8 sm:mt-10">
 
-            <button onClick={() => navigate("/create")} className="bg-green-600 hover:bg-green-700
+            <button onClick={() => navigate("/create-product")} className="bg-green-600 hover:bg-green-700
              px-6 py-4 rounded-full text-white font-semibold transition duration-300">
 
              Create
 
             </button>
-            <button
+            <button onClick={() => navigate("/showcase")}
               className="
                 border border-white text-white
                 px-6 sm:px-8 py-3 sm:py-4
@@ -66,7 +68,7 @@ function Hero() {
                 transition duration-300
               "
             >
-              Explore
+              Explore AI Creations →
             </button>
 
           </div>

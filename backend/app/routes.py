@@ -103,13 +103,15 @@ async def create_product(
 ):
 
     existing = products_collection.find_one(
-        {"id": id}
+        {
+            "id": id,
+         "owner": user["email"]}
     )
 
     if existing:
         raise HTTPException(
             status_code=400,
-            detail="Product ID already exists"
+            detail="You already have a product with this ID."
         )
 
     os.makedirs("uploads", exist_ok=True)

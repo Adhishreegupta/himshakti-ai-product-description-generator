@@ -1,6 +1,6 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-
+import hero from "../assets/hero-bg1.jpg";
 function Navbar() {
 
   const navigate = useNavigate();
@@ -55,7 +55,13 @@ const [userName, setUserName] = useState("");
 
   return (
 
-    <nav className="absolute top-0 left-0 w-full z-50">
+    <nav
+  className={`top-0 left-0 w-full z-50 ${
+    location.pathname === "/"
+      ? "absolute bg-transparent"
+      : "fixed bg-black/40 backdrop-blur-md"
+  }`}
+>
 
       <div className="max-w-7xl mx-auto px-8 py-6">
 

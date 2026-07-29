@@ -1,10 +1,18 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+html,
+body,
+#root{
+    min-height:100%;
+}
+
 html.dark{
-background:#050505;
+    background:#050505;
 }
 
 html.dark body{
-background:#050505;
-color:white;
+    background:#050505;
 }

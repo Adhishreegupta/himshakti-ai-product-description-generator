@@ -4,11 +4,9 @@ import hero from "../assets/hero-bg1.jpg"
 
 function About() {
 return (
-
 <>
-<br></br>
 <Navbar />
-<br></br>
+
 <main>
 
 <section

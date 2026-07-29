@@ -7,7 +7,6 @@ import Footer from "../components/Footer";
 import hero from "../assets/hero-bg1.jpg";
 
 function Register() {
-
   const navigate = useNavigate();
 
   const [user, setUser] = useState({
@@ -20,22 +19,35 @@ function Register() {
   const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
-
     setUser({
       ...user,
       [e.target.name]: e.target.value,
     });
-
   };
 
   const handleRegister = async () => {
 
-    if (
-      !user.name ||
-      !user.email ||
-      !user.password
-    ) {
+    // Empty fields validation
+    if (!user.name || !user.email || !user.password) {
       setMessage("Please fill all fields.");
+      return;
+    }
+
+    // Name validation
+    if (user.name.trim().length < 3) {
+      setMessage("Name should be at least 3 characters.");
+      return;
+    }
+
+    // Email validation
+    if (!user.email.includes("@")) {
+      setMessage("Enter a valid email.");
+      return;
+    }
+
+    // Password validation
+    if (user.password.length < 6) {
+      setMessage("Password should contain at least 6 characters.");
       return;
     }
 
@@ -43,20 +55,6 @@ function Register() {
     setMessage("");
 
     try {
-      if(name.trim().length < 3){
-    setMessage("Name should be at least 3 characters.");
-    return;
-}
-
-if(!email.includes("@")){
-    setMessage("Enter a valid email.");
-    return;
-}
-
-if(password.length < 6){
-    setMessage("Password should contain at least 6 characters.");
-    return;
-}
       const response = await axios.post(
         "http://127.0.0.1:8000/auth/register",
         user
@@ -68,37 +66,32 @@ if(password.length < 6){
         navigate("/login");
       }, 1500);
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
       if (error.response) {
         setMessage(error.response.data.detail);
-      }
-      else {
+      } else {
         setMessage("Backend connection failed.");
       }
 
+    } finally {
+
+      setLoading(false);
+
     }
-
-    setLoading(false);
-
   };
 
   return (
-
     <>
       <Navbar />
 
       <main>
-
         <section
           className="relative min-h-screen bg-cover bg-center"
           style={{
             backgroundImage: `url(${hero})`,
           }}
         >
-
           <div className="absolute inset-0 bg-black/60"></div>
 
           <div
@@ -112,7 +105,6 @@ if(password.length < 6){
             pb-20
             "
           >
-
             <div
               className="
               bg-white/15
@@ -126,17 +118,12 @@ if(password.length < 6){
               text-white
               "
             >
-
               <h1 className="text-4xl font-bold">
-
                 Create Account
-
               </h1>
 
               <p className="mt-4 text-gray-200">
-
                 Register to start creating AI product descriptions.
-
               </p>
 
               <input
@@ -206,25 +193,19 @@ if(password.length < 6){
                 font-medium
                 duration-300
                 disabled:bg-gray-500
+                disabled:cursor-not-allowed
                 "
               >
-
                 {loading ? "Registering..." : "Register"}
-
               </button>
 
               {message && (
-
                 <p className="text-center mt-6 text-green-300 font-semibold">
-
                   {message}
-
                 </p>
-
               )}
 
               <p className="text-center mt-8 text-gray-300">
-
                 Already have an account?
 
                 <Link
@@ -233,23 +214,16 @@ if(password.length < 6){
                 >
                   Login
                 </Link>
-
               </p>
 
             </div>
-
           </div>
-
         </section>
-
       </main>
 
       <Footer />
-
     </>
-
   );
-
 }
 
 export default Register;

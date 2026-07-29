@@ -10,95 +10,73 @@ Loader,
 
 function Showcase() {
 
-const [open,setOpen]=useState(false)
+  const products = [
+    {
+      name: "Himalayan Organic Honey",
+      weight: "500g",
+      tone: "Premium",
+      description:
+        "Pure Himalayan honey collected from natural forests. Rich in taste and natural nutrients."
+    },
+    {
+      name: "Traditional Millet Cookies",
+      weight: "250g",
+      tone: "Traditional",
+      description:
+        "Healthy millet cookies made using traditional recipes and wholesome ingredients."
+    }
+  ];
 
-const [showToast,setShowToast]=useState(false)
 
-return(
+  return (
+    <div className="min-h-screen bg-black text-white px-6 py-20">
 
-<div className="p-10 space-y-10">
+      <h1 className="text-5xl font-bold text-center mb-12">
+        AI Generated Creations
+      </h1>
 
-<h1 className="text-5xl">
-UI Components
-</h1>
 
-<div className="flex gap-5">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-<Button>
-Primary
-</Button>
+        {products.map((product,index)=>(
 
-<Button variant="secondary">
-Secondary
-</Button>
+          <div
+          key={index}
+          className="bg-gray-900 p-6 rounded-xl border border-gray-700"
+          >
 
-<Button variant="outline">
-Outline
-</Button>
+            <h2 className="text-2xl font-bold">
+              {product.name}
+            </h2>
 
-</div>
+            <p className="text-green-400 mt-2">
+              {product.tone}
+            </p>
 
-<Input
-label="Email"
-placeholder="Enter email"
-/>
+            <p className="mt-3 text-gray-300">
+              Weight: {product.weight}
+            </p>
 
-<Button
-onClick={()=>setOpen(true)}
->
-Open Modal
-</Button>
+            <p className="mt-5 text-gray-400">
+              {product.description}
+            </p>
 
-<Button
-variant="secondary"
-onClick={()=>{
-setShowToast(true)
 
-setTimeout(()=>{
-setShowToast(false)
-},3000)
+            <button
+            className="mt-5 bg-green-600 px-5 py-2 rounded-full"
+            >
+              View Details
+            </button>
 
-}}
->
-Show Toast
-</Button>
+          </div>
 
-<div>
+        ))}
 
-<h2 className="mb-3">
-Loader Example
-</h2>
+      </div>
 
-<div className="w-fit">
-<Loader/>
-</div>
-
-</div>
-
-<Modal
-isOpen={open}
-onClose={()=>setOpen(false)}
-title="Demo Modal"
->
-
-<p>
-This is modal component.
-</p>
-
-</Modal>
-
-{
-showToast
-&&
-<Toast
-message="Component Working"
-/>
+    </div>
+  )
 }
 
-</div>
+export default Showcase;
 
-)
-
-}
-
-export default Showcase

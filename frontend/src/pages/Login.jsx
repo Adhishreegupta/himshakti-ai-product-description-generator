@@ -56,9 +56,14 @@ const response = await axios.post(
 );
 
       localStorage.setItem(
-        "token",
-        response.data.access_token
-      );
+  "token",
+  response.data.access_token
+);
+
+localStorage.setItem(
+  "userName",
+  response.data.username
+);
 
       toast.success("Login Successful!");
 
@@ -92,7 +97,12 @@ const response = await axios.post(
 
     const user = result.user;
 
-    localStorage.setItem("token", "google-user");
+    const token = await user.getIdToken();
+
+localStorage.setItem(
+  "token",
+  token
+);
 
     localStorage.setItem(
       "userName",
