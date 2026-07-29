@@ -6,7 +6,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import hero from "../assets/hero-bg1.jpg";
 import { signInWithPopup } from "Firebase/auth";
-import { auth, googleProvider } from "../firebase";
+import { auth, googleProvider } from "../Firebase";
 import { toast } from "react-toastify";
 function Login() {
 
