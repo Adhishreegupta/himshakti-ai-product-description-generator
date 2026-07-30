@@ -39,29 +39,38 @@ def register(
     request: Request,
     user: User
 ):
+    try:
+        print("Received:", user)
 
-    existing = users_collection.find_one(
-        {"email": user.email}
-    )
-
-    if existing:
-        raise HTTPException(
-            status_code=400,
-            detail="Email already registered"
+        existing = users_collection.find_one(
+            {"email": user.email}
         )
 
-    new_user = {
-        "name": user.name,
-        "email": user.email,
-        "password": hash_password(user.password)
-    }
+        if existing:
+            raise HTTPException(
+                status_code=400,
+                detail="Email already registered"
+            )
 
-    users_collection.insert_one(new_user)
+        hashed = hash_password(user.password)
+        print("Password hashed")
 
-    return {
-        "message": "User registered successfully"
-    }
+        new_user = {
+            "name": user.name,
+            "email": user.email,
+            "password": hashed
+        }
 
+        users_collection.insert_one(new_user)
+        print("User inserted")
+
+        return {
+            "message": "User registered successfully"
+        }
+
+    except Exception as e:
+        print("REGISTER ERROR:", str(e))
+        raise
 
 # ==========================
 # LOGIN
