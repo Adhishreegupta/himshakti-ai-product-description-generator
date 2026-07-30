@@ -44,10 +44,9 @@ app.add_middleware(
         "http://localhost:5173",
 
         # Vercel production URL
-        "https://himshakti-ai-product-description-generator-adhi13.vercel.app",
-
-        # Vercel git deployment URL
+        "https://himshakti-ai-product-description-ge.vercel.app",
         "https://himshakti-ai-product-description-generator-git-main-adhi13.vercel.app"
+        "https://himshakti-ai-product-description-generator-izohwubqr-adhi13.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
